@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://78so8hylfsh8"]
+
+[ext_resource type="FontFile" uid="uid://dtbgcho3xt45d" path="res://Fonts/Kenney Thick.ttf" id="1_gjw0e"]
+[ext_resource type="Script" path="res://score_label.gd" id="2_a01l5"]
+[ext_resource type="Script" path="res://level_label.gd" id="3_h1tvs"]
+[ext_resource type="Texture2D" uid="uid://clwdx81nnm3w1" path="res://Sprites/bar_progress.png" id="5_mmceg"]
+[ext_resource type="Texture2D" uid="uid://dul6ttm7mjayu" path="res://Sprites/heart.png" id="6_oq1s8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6s23l"]
+font = ExtResource("1_gjw0e")
+font_color = Color(0.776471, 0.729412, 0.67451, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3hu2e"]
+load_path = "res://.godot/imported/bar_over.png-34b8e0afaa53592ae606e3d72b4835f1.ctex"
+
+[node name="GameUI" type="CanvasLayer"]
+
+[node name="Score" type="Label" parent="."]
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 65.0
+offset_bottom = 50.0
+text = "0"
+label_settings = SubResource("LabelSettings_6s23l")
+script = ExtResource("2_a01l5")
+
+[node name="Level" type="Label" parent="."]
+offset_left = 25.0
+offset_top = 65.0
+offset_right = 128.0
+offset_bottom = 88.0
+text = "l1"
+label_settings = SubResource("LabelSettings_6s23l")
+script = ExtResource("3_h1tvs")
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -175.0
+offset_top = 25.0
+offset_right = -111.0
+offset_bottom = 33.0
+grow_horizontal = 0
+scale = Vector2(2, 2)
+texture_over = SubResource("CompressedTexture2D_3hu2e")
+texture_progress = ExtResource("5_mmceg")
+
+[node name="Heart" type="TextureRect" parent="HealthBar"]
+layout_mode = 0
+offset_left = 71.5
+offset_right = 111.5
+offset_bottom = 40.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_oq1s8")

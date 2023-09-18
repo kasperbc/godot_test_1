@@ -1,0 +1,27 @@
+[gd_scene load_steps=8 format=3 uid="uid://c37hjelxac7dg"]
+
+[ext_resource type="Texture2D" uid="uid://3pxstc3h1g7l" path="res://Sprites/bottle.png" id="1_gs6rh"]
+[ext_resource type="Script" path="res://shootable_object.gd" id="1_riiwk"]
+[ext_resource type="Script" path="res://shootable_object_rb.gd" id="2_ctdoy"]
+[ext_resource type="Texture2D" uid="uid://upd1k8pokyjf" path="res://Sprites/brick.png" id="3_lxvos"]
+[ext_resource type="Texture2D" uid="uid://dppig6t7bx8hi" path="res://Sprites/diamond.png" id="4_jukhq"]
+[ext_resource type="Texture2D" uid="uid://ce03dw5wj106b" path="res://Sprites/ice.png" id="5_r7rep"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ar4dq"]
+
+[node name="ShootableObject" type="Node2D"]
+script = ExtResource("1_riiwk")
+sprites = Array[CompressedTexture2D]([ExtResource("1_gs6rh"), ExtResource("3_lxvos"), ExtResource("4_jukhq"), ExtResource("5_r7rep")])
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_mask = 0
+input_pickable = true
+script = ExtResource("2_ctdoy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_ar4dq")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+texture = ExtResource("1_gs6rh")
+
+[connection signal="input_event" from="RigidBody2D" to="." method="_on_rigid_body_2d_input_event"]
