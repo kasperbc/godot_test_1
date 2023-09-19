@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dlsfiwa6fl6bw"]
+[gd_scene load_steps=6 format=3 uid="uid://dlsfiwa6fl6bw"]
 
 [ext_resource type="Script" path="res://ObjectSpawner.gd" id="1_somwp"]
 [ext_resource type="PackedScene" uid="uid://78so8hylfsh8" path="res://game_ui.tscn" id="2_isqfr"]
 [ext_resource type="Script" path="res://camera.gd" id="2_td6yr"]
 [ext_resource type="PackedScene" uid="uid://c6ofrh76vqjoo" path="res://game_over_ui.tscn" id="4_ebobq"]
+[ext_resource type="Script" path="res://mouse_logic.gd" id="5_rhuva"]
 
 [node name="Game" type="Node2D"]
 
@@ -21,5 +22,8 @@ script = ExtResource("2_td6yr")
 
 [node name="GameOverUI" parent="." instance=ExtResource("4_ebobq")]
 visible = false
+
+[node name="MouseLogic" type="Node2D" parent="."]
+script = ExtResource("5_rhuva")
 
 [connection signal="timeout" from="ObjectSpawner/SpawnTimer" to="ObjectSpawner" method="_on_spawn_timer_timeout"]

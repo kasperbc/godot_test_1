@@ -5,13 +5,7 @@ extends Node2D
 func _ready():
 	get_node("RigidBody2D/Sprite2D").texture = sprites.pick_random()
 
-
-func _on_rigid_body_2d_input_event(viewport, event, shape_idx):
-	if not event is InputEventMouseButton:
-		return
-	if not event.pressed:
-		return
-	
+func on_hit():
 	GameLogic.on_shootable_obj_hit()
 	
 	var part = particle.instantiate()
@@ -24,3 +18,4 @@ func _on_rigid_body_2d_input_event(viewport, event, shape_idx):
 	
 	get_parent().get_parent().get_node("Camera").screen_shake(0.5,0.5)
 	queue_free()
+

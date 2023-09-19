@@ -24,11 +24,24 @@ text = "0"
 label_settings = SubResource("LabelSettings_6s23l")
 script = ExtResource("2_a01l5")
 
-[node name="Level" type="Label" parent="."]
-offset_left = 25.0
-offset_top = 65.0
-offset_right = 128.0
-offset_bottom = 88.0
+[node name="EXPBar" type="TextureProgressBar" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -392.0
+offset_top = 24.0
+offset_right = -328.0
+offset_bottom = 32.0
+grow_horizontal = 0
+scale = Vector2(2, 2)
+texture_over = SubResource("CompressedTexture2D_3hu2e")
+texture_progress = ExtResource("5_mmceg")
+
+[node name="Level" type="Label" parent="EXPBar"]
+offset_left = 68.0
+offset_right = 132.0
+offset_bottom = 23.0
+scale = Vector2(0.5, 0.5)
 text = "l1"
 label_settings = SubResource("LabelSettings_6s23l")
 script = ExtResource("3_h1tvs")
@@ -37,10 +50,10 @@ script = ExtResource("3_h1tvs")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -175.0
-offset_top = 25.0
-offset_right = -111.0
-offset_bottom = 33.0
+offset_left = -176.0
+offset_top = 24.0
+offset_right = -112.0
+offset_bottom = 32.0
 grow_horizontal = 0
 scale = Vector2(2, 2)
 texture_over = SubResource("CompressedTexture2D_3hu2e")

@@ -1,22 +1,27 @@
 extends Node
 
-var HITS_FOR_LVL_UP = 20
+var BASE_EXP_FOR_LVL_UP = 20
 var LEVEL_CAP = 10
-var SCORE_PER_HIT = 10
+var SCORE_PER_HIT = 100
 var MAX_HEALTH = 20.0
+var MAX_STREAK = 30
 
-var level = 1
 var score = 0
-var objects_hit = 0
+var level = 1
+var exp = 0.0
+var exp_for_lvl_up = 20
 var health = 20.0
 var dead = false
+var streak = 0
 
 func game_start():
 	level = 1
 	score = 0
-	objects_hit = 0
+	exp = 0.0
+	exp_for_lvl_up = BASE_EXP_FOR_LVL_UP
 	health = MAX_HEALTH
 	dead = false
+	streak = 0
 	get_tree().change_scene_to_file("res://game.tscn")
 
 func _process(delta):
@@ -50,13 +55,28 @@ func damage_health(amount):
 # SCORE/LEVELS
 
 func on_shootable_obj_hit():
-	objects_hit += 1
+	add_exp(1.0)
 	
-	if objects_hit >= (HITS_FOR_LVL_UP * level) + ((HITS_FOR_LVL_UP * float(1 + level / 10)) - HITS_FOR_LVL_UP):
+	var streak_multiplier = 1 + (min(streak, MAX_STREAK) / 10)
+	streak += 1
+	
+	if exp >= exp_for_lvl_up:
 		level_up()
 	
-	score += roundi((SCORE_PER_HIT * get_game_speed()) / 10) * 10
+	add_score(roundi((SCORE_PER_HIT * get_game_speed() * streak_multiplier) / 10) * 10)
+
+func add_score(amount):
+	score += amount
 	get_node("/root/Game/GameUI/Score").on_score_change()
+
+func add_exp(amount):
+	exp += amount
+	exp = max(exp, 0.0)
+	get_node("/root/Game/GameUI/EXPBar").value = (exp / float(exp_for_lvl_up)) * 100
+
+func on_miss():
+	streak = 0
+	add_exp(-0.25)
 
 func level_up():
 	if level >= LEVEL_CAP:
@@ -65,6 +85,10 @@ func level_up():
 	level += 1
 	update_game_speed()
 	
+	exp_for_lvl_up = BASE_EXP_FOR_LVL_UP * get_game_speed()
+	
+	add_exp(-1000.0)
+
 func level_down():
 	if level <= 1:
 		return
@@ -73,8 +97,8 @@ func level_down():
 	update_game_speed()
 
 func update_game_speed():
-	get_node("/root/Game/GameUI/Level").on_level_change()
+	get_node("/root/Game/GameUI/EXPBar/Level").on_level_change()
 	get_node("/root/Game/ObjectSpawner/SpawnTimer").set_wait_time(1 / get_game_speed())
 
 func get_game_speed():
-	return 1.0 + float(level) / 10.0
+	return 1.0 + (float(level) - 1) / 10.0
